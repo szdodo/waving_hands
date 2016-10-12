@@ -5,6 +5,7 @@ sRight=""
 #damage taken
 fDmg=0
 sDmg=0
+fSpell=""
 
 
 
@@ -15,12 +16,14 @@ def input_check(letter):
 
 def spells_check(hand):
     for each in gestures:
-        if hand == gestures[each]:
-            #print("jó")
-            func=spells[hand]
+        if hand.find(gestures[each]) != (-1):
+            print("jó")
+            func=spells[gestures[each]]
             func()
-        #else:
-            #print("nem jó")
+            hand=""
+            return hand
+        else:
+            print("nem jó")
 
 
 def hand_reading(fLeft,fRight,sLeft,sRight):
@@ -43,9 +46,8 @@ def game_over(fDmg):
         print("\nJáték vége!\nAz első játékos nyert!\n")
 
 def rounds(fLeft,fRight,sLeft,sRight,fDmg,sDmg):
-    i=1
     if fDmg!=15 and sDmg!=15:
-        print("\n",i,". kör\n")
+        print("\n",1,". kör\n")
         hand_reading(fLeft,fRight,sLeft,sRight)
         fDmg=fDmg+3
         print(fDmg)
@@ -86,9 +88,10 @@ spells={ "WPP" : counter_spell,
          ">": "Stab"}
 
 rounds(fLeft,fRight,sLeft,sRight,fDmg,sDmg)
-spells_check("SD")
+spell=spells_check("WPFSSDWPP")
 #lines=["PL","WPFD","SD","WPP"]
 #for line in lines:
 #    func=spells[line]
 #    func()
-
+alma="WSSWWS"
+#print(alma.find("WSW"))

@@ -1,11 +1,11 @@
-fLeft="WW"
+fLeft=""
 fRight=""
 sLeft=""
 sRight=""
 #damage taken
 fDmg=0
 sDmg=0
-fSpell=""
+
 
 
 
@@ -21,29 +21,35 @@ def spell_check(hand):
             func=spells[gestures[each]]
             func()
             hand=""
-            return hand
-        #else:
-            #return hand
+    return hand
+        
 
 #firtsL.. - beolvasáshoz kell, fLeft amit használunk
-def hand_reading(fLeft,fRight,sLeft,sRight): 
+def hand_reading(fL,fR,sL,sR): 
+    global fLeft
     firstL=input("1. játékos bal kéz: ")
-    fLeft=fLeft+input_check(firstL)
-    print(fLeft)
+    fLeft=str(fLeft)+str(input_check(firstL))
+    #print(fLeft)
     fLeft=spell_check(fLeft)
     print(fLeft)
 
+    global fRight
     firstR=input("1. játékos jobbkéz: ")
     fRight=fRight+input_check(firstR)
     fRight=spell_check(fRight)
+    print(fRight)
 
+    global sLeft
     secondL=input("2. játkos bal kéz: ")
     sLeft=sLeft+input_check(secondL)
     sLeft=spell_check(sLeft)
+    print(sLeft)
 
+    global sRight
     secondR=input("2. játékos jobbkéz: ")
     sRight=sRight+input_check(secondR)
     sRight=spell_check(sRight)
+    print(sRight)
 
 def game_over(fDmg):
     if fDmg==15:
@@ -51,13 +57,13 @@ def game_over(fDmg):
     else:
         print("\nJáték vége!\nAz első játékos nyert!\n")
 
-def rounds(fLeft,fRight,sLeft,sRight,fDmg,sDmg):
+def rounds(fL,fR,sL,sR,fDmg, sDmg):
     if fDmg!=15 and sDmg!=15:
         print("\n",1,". kör\n")
-        hand_reading(fLeft,fRight,sLeft,sRight)
+        hand_reading(fL,fR,sL,sR)
         fDmg+=3
         print(fDmg)
-        rounds(fLeft,fRight,sLeft,sRight,fDmg,sDmg)
+        rounds(fL,fR,sL,sR,fDmg,sDmg)
     else:
         game_over(fDmg)
 
@@ -94,7 +100,7 @@ spells={ "WPP" : counter_spell,
          "WPFD": cause_heavy_wounds,
          ">": "Stab"}
 
-rounds(fLeft,fRight,sLeft,sRight,fDmg,sDmg)
+rounds(fLeft,fRight,sLeft,sRight,fDmg, sDmg)
 spell=spell_check("WPFSSDWPP")
 #lines=["PL","WPFD","SD","WPP"]
 #for line in lines:

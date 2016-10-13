@@ -27,7 +27,7 @@ def spell_check(hand,num):
         
 
 #firtsL.. - beolvasáshoz kell, fLeft amit használunk
-def hand_reading(): 
+def hand_reading_first(): 
     global fLeft
     firstL=input("1. játékos bal kéz: ")
     fLeft=str(fLeft)+str(input_check(firstL))
@@ -38,6 +38,11 @@ def hand_reading():
     fRight=fRight+input_check(firstR)
     print(fRight)
 
+    fLeft=spell_check(fLeft,1)
+    fRight=spell_check(fRight,1)
+    
+
+def hand_reading_second(): 
     global sLeft
     secondL=input("2. játkos bal kéz: ")
     sLeft=sLeft+input_check(secondL)
@@ -48,8 +53,6 @@ def hand_reading():
     sRight=sRight+input_check(secondR)
     print(sRight)
 
-    fLeft=spell_check(fLeft,1)
-    fRight=spell_check(fRight,1)
     sLeft=spell_check(sLeft,2)
     sRight=spell_check(sRight,2)
 
@@ -66,21 +69,32 @@ def rounds(fL,fR,sL,sR):
     global sShield
     global fCounter
     global sCounter
-    if fDmg<15 and sDmg<15:
-        print("\n",1,". kör\n")
+    #if fDmg<15 and sDmg<15:
+    if sDmg<15:
+        print("\n1.játékos\n")
         fShield=False
-        sShield=False
+        #sShield=False
         fCounter=False
-        sCounter=False
-        hand_reading()
+        #sCounter=False
+        hand_reading_first()
+        #hand_reading_second()
         #fDmg+=2
         print(fDmg)
-        print(sDmg)
-        print(fShield,sShield)
-        print(fCounter,sCounter)
-        rounds(fL,fR,sL,sR)
+        
+        #print(fShield,sShield)
+        #print(fCounter,sCounter)
     else:
         game_over()
+        
+    if fDmg<15:
+        print("\n2. játékos\n")
+        sShield=False
+        sCounter=False
+        hand_reading_second()
+        print(sDmg)
+    else:
+        game_over()
+    rounds(fL,fR,sL,sR)
 
 
 def counter_spell(num):

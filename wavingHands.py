@@ -29,27 +29,27 @@ def hand_reading():
     global fLeft
     firstL=input("1. játékos bal kéz: ")
     fLeft=str(fLeft)+str(input_check(firstL))
-    #print(fLeft)
-    fLeft=spell_check(fLeft,1)
     print(fLeft)
 
     global fRight
     firstR=input("1. játékos jobbkéz: ")
     fRight=fRight+input_check(firstR)
-    fRight=spell_check(fRight,1)
     print(fRight)
 
     global sLeft
     secondL=input("2. játkos bal kéz: ")
     sLeft=sLeft+input_check(secondL)
-    sLeft=spell_check(sLeft,2)
     print(sLeft)
 
     global sRight
     secondR=input("2. játékos jobbkéz: ")
     sRight=sRight+input_check(secondR)
-    sRight=spell_check(sRight,2)
     print(sRight)
+
+    fLeft=spell_check(fLeft,1)
+    fRight=spell_check(fRight,1)
+    sLeft=spell_check(sLeft,2)
+    sRight=spell_check(sRight,2)
 
 def game_over():
     if fDmg==15:
@@ -67,9 +67,9 @@ def rounds(fL,fR,sL,sR):
         fProtection=False
         sProtection=False
         hand_reading()
-        fDmg+=2
-        print(sDmg)
+        #fDmg+=2
         print(fDmg)
+        print(sDmg)
         print(fProtection,sProtection)
         rounds(fL,fR,sL,sR)
     else:
@@ -137,6 +137,16 @@ def cause_heavy_wounds(num):
         fDmg=fDmg+3
     print("Cause Heavy Wounds")
 
+#stabet minden levédi
+def stab(num):
+    global fDmg
+    global sDmg
+    if num==1 and sProtection==False:
+        sDmg=sDmg+1
+    if num==2 and fProtection==False:
+        fDmg=fDmg+1
+    print("Stab")
+
 
 gestures= {0:"WPP",1:"WWS",2:"PS",3:"SD",4:"DFFDD",5:"WDD",6:"WFP",7:"WPFD",8:">"}
 
@@ -149,7 +159,7 @@ spells={ "WPP" : counter_spell,
          "WFP": cause_light_wounds, 
          "WPFD": cause_heavy_wounds,
          "PS": shield,
-         ">": "Stab"}
+         ">": stab}
 
 rounds(fLeft,fRight,sLeft,sRight)
 #spell=spell_check("WPFSSDWPP")

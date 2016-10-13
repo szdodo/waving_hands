@@ -68,15 +68,17 @@ def rounds(fL,fR,sL,sR):
     global sShield
     global fCounter
     global sCounter
-    #if fDmg<15 and sDmg<15:
+
     if sDmg<15 and fDmg<15:
         print("\n1. JÁTÉKOS ",fDmg," SEBZÉST KAPOTT\n")
         fShield=False
         fCounter=False
         hand_reading_first()
-    #else:
-    #    game_over()
-    #if fDmg<15 and sDmg<15:
+    else:
+        game_over()
+    
+    #2db if kell h nem menjen túl az életükön ha az egyik meghalna mér akkorse
+    if fDmg<15 and sDmg<15:
         print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\n")
         sShield=False
         sCounter=False
@@ -96,7 +98,7 @@ def counter_spell(num):
     else:
         sCounter=True
         #print(sCounter)
-    print("Counter-spell")
+    print('\033[92m' + '\033[1m' + "Counter-spell" + '\033[0m')
 
 def shield(num):
     global fShield
@@ -108,7 +110,7 @@ def shield(num):
     else:
         sShield=True
         #print(sShield)
-    print("Shield")
+    print('\033[94m' + '\033[1m' + "Shield" + '\033[0m')
 
 def missile(num):
     global fDmg
@@ -121,7 +123,7 @@ def missile(num):
         fDmg=fDmg+1
     elif fCounter==True:
         sDmg=sDmg+1
-    print("Missile")
+    print('\033[95m' + '\033[1m' + "Missile" + '\033[0m')
 
 def lightning_bolt(num):
     global fDmg
@@ -134,7 +136,7 @@ def lightning_bolt(num):
         fDmg=fDmg+5
     elif fCounter==True:
         sDmg=sDmg+5
-    print("Lightning Bolt")
+    print('\033[93m' + '\033[1m' + "Lightning Bolt" + '\033[0m')
 
 def cause_light_wounds(num):
     global fDmg
@@ -147,7 +149,7 @@ def cause_light_wounds(num):
         fDmg=fDmg+2
     elif fCounter==True:
         sDmg=sDmg+2
-    print("Cause Light Wounds")
+    print('\033[91m' + '\033[1m' + "Cause Light Wounds" + '\033[0m')
 
 def cause_heavy_wounds(num):
     global fDmg
@@ -160,7 +162,7 @@ def cause_heavy_wounds(num):
         fDmg=fDmg+3
     elif fCounter==True:
         sDmg=sDmg+3
-    print("Cause Heavy Wounds")
+    print('\033[91m' + '\033[1m' + "Cause Heavy Wounds" + '\033[0m')
 
 #stabet minden levédi
 def stab(num):
@@ -170,12 +172,11 @@ def stab(num):
         sDmg=sDmg+1
     if num==2 and fShield==False:
         fDmg=fDmg+1
-    print("Stab")
+    print('\033[91m' + '\033[1m' + "Stab" + '\033[0m')
 
 
 gestures= {0:"WPP",1:"WWS",2:"PS",3:"SD",4:"DFFDD",5:"WDD",6:"WFP",7:"WPFD",8:">"}
 
-#WDDC-lightning bolt, nincs clap mert ahhoz 2 kéz kell
 spells={ "WPP" : counter_spell,
          "WWS": counter_spell,
          "SD": missile, 
@@ -187,10 +188,3 @@ spells={ "WPP" : counter_spell,
          ">": stab}
 
 rounds(fLeft,fRight,sLeft,sRight)
-#spell=spell_check("WPFSSDWPP")
-#lines=["PL","WPFD","SD","WPP"]
-#for line in lines:
-#    func=spells[line]
-#    func()
-#alma="WSSWWS"
-#print(alma.find("WSW"))

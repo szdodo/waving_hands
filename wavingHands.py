@@ -1,4 +1,5 @@
 import os
+import time
 
 fLeft=""
 fRight=""
@@ -74,7 +75,7 @@ def rounds(fL,fR,sL,sR):
     os.system('clear')
 
     if sDmg<15 and fDmg<15:
-        print("\n1. JÁTÉKOS ",fDmg," SEBZÉST KAPOTT\nBalkéz: ",fLeft,"\nJobbkéz: ",fRight,"\n")
+        print("\n1. JÁTÉKOS ",fDmg," SEBZÉST KAPOTT\nBal: ",fLeft,"\nJobb: ",fRight,"\n")
         fShield=False
         fCounter=False
         hand_reading_first()
@@ -83,12 +84,13 @@ def rounds(fL,fR,sL,sR):
     
     #2db if kell h nem menjen túl az életükön ha az egyik meghalna mér akkorse
     if fDmg<15 and sDmg<15:
-        print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\nBalkéz: ",sLeft,"\nJobbKéz: ",sRight,"\n")
+        print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\nBal: ",sLeft,"\nJobb: ",sRight,"\n")
         sShield=False
         sCounter=False
         hand_reading_second()
     else:
         game_over()
+    time.sleep(0.5)
     rounds(fL,fR,sL,sR)
 
 
@@ -201,14 +203,16 @@ def rules():
     if ind != "":
         rounds(fLeft,fRight,sLeft,sRight)
 
+
+
 os.system('clear')
-new_game=input("1 - Súgó\n2 - Új játék\n")
+new_game=input("\n1 - Súgó\n2 - Új játék\n")
+
 if new_game == '2':
     rounds(fLeft,fRight,sLeft,sRight)
 elif new_game == '1':
     rules()
 else:
-    os.system('clear')
-    new_game=input("1 - Súgó\n2 - Új játék")
+    quit()
    
     

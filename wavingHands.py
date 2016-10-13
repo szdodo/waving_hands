@@ -1,3 +1,5 @@
+import os
+
 fLeft=""
 fRight=""
 sLeft=""
@@ -69,8 +71,10 @@ def rounds(fL,fR,sL,sR):
     global fCounter
     global sCounter
 
+    os.system('clear')
+
     if sDmg<15 and fDmg<15:
-        print("\n1. JÁTÉKOS ",fDmg," SEBZÉST KAPOTT\n")
+        print("\n1. JÁTÉKOS ",fDmg," SEBZÉST KAPOTT\nBalkéz: ",fLeft,"\nJobbkéz: ",fRight,"\n")
         fShield=False
         fCounter=False
         hand_reading_first()
@@ -79,7 +83,7 @@ def rounds(fL,fR,sL,sR):
     
     #2db if kell h nem menjen túl az életükön ha az egyik meghalna mér akkorse
     if fDmg<15 and sDmg<15:
-        print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\n")
+        print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\nBalkéz: ",sLeft,"\nJobbKéz: ",sRight,"\n")
         sShield=False
         sCounter=False
         hand_reading_second()
@@ -187,4 +191,24 @@ spells={ "WPP" : counter_spell,
          "PS": shield,
          ">": stab}
 
-rounds(fLeft,fRight,sLeft,sRight)
+def rules():
+    os.system('clear')
+    print('\033[1m' + "\nWAVING HANDS\n" + '\033[0m')
+    print('\033[4m' +"Varázslatok:" + '\033[0m')
+    print("WPP/WWS - Counter-spell\nSD - Missile\nDFFDD/WDD - Lightning Bolt")
+    print("WFP - Cause Light Wounds\nWPFD - Cause Heavy Wounds\nPS - Shield\n> - Stab")
+    ind = input("\nÍrj be valamit a kezdéshez!")
+    if ind != "":
+        rounds(fLeft,fRight,sLeft,sRight)
+
+os.system('clear')
+new_game=input("1 - Súgó\n2 - Új játék\n")
+if new_game == '2':
+    rounds(fLeft,fRight,sLeft,sRight)
+elif new_game == '1':
+    rules()
+else:
+    os.system('clear')
+    new_game=input("1 - Súgó\n2 - Új játék")
+   
+    

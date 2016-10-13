@@ -74,9 +74,9 @@ def rounds(fL,fR,sL,sR):
         fShield=False
         fCounter=False
         hand_reading_first()
-    else:
-        game_over()
-    if fDmg<15 and sDmg<15:
+    #else:
+    #    game_over()
+    #if fDmg<15 and sDmg<15:
         print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\n")
         sShield=False
         sCounter=False

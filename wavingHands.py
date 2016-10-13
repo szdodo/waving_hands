@@ -5,8 +5,10 @@ sRight=""
 #damage taken
 fDmg=0
 sDmg=0
-fProtection=False
-sProtection=False
+fShield=False
+sShield=False
+fCounter=False
+sCounter=False
 
 def input_check(letter):
     while letter!='W' and letter!='F' and letter!='P' and letter!='S' and letter!='D' and letter!='>' and letter !='':
@@ -60,90 +62,110 @@ def game_over():
 def rounds(fL,fR,sL,sR):
     global fDmg
     global sDmg
-    global fProtection
-    global sProtection
+    global fShield
+    global sShield
+    global fCounter
+    global sCounter
     if fDmg<15 and sDmg<15:
         print("\n",1,". kör\n")
-        fProtection=False
-        sProtection=False
+        fShield=False
+        sShield=False
+        fCounter=False
+        sCounter=False
         hand_reading()
         #fDmg+=2
         print(fDmg)
         print(sDmg)
-        print(fProtection,sProtection)
+        print(fShield,sShield)
+        print(fCounter,sCounter)
         rounds(fL,fR,sL,sR)
     else:
         game_over()
 
 
 def counter_spell(num):
-    global fProtection
-    global sProtection
+    global fCounter
+    global sCounter
     
     if num==1:
-        fProtection=True
-        print(fProtection)
+        fCounter=True
+        print(fCounter)
     else:
-        sProtection=True
-        print(sProtection)
+        sCounter=True
+        print(sCounter)
     print("Counter-spell")
 
 def shield(num):
-    global fProtection
-    global sProtection
+    global fShield
+    global sShield
 
     if num==1:
-        fProtection=True
-        print(fProtection)
+        fShield=True
+        print(fShield)
     else:
-        sProtection=True
-        print(sProtection)
+        sShield=True
+        print(sShield)
     print("Shield")
 
 def missile(num):
     global fDmg
     global sDmg
-    if num==1 and sProtection==False:
+    if num==1 and sShield==False and sCounter==False:
         sDmg=sDmg+1
-    if num==2 and fProtection==False:
+    elif sCounter==True:
         fDmg=fDmg+1
-    
+    if num==2 and fShield==False and fCounter==False:
+        fDmg=fDmg+1
+    elif fCounter==True:
+        sDmg=sDmg+1
     print("Missile")
 
 def lightning_bolt(num):
     global fDmg
     global sDmg
-    if num==1 and sProtection==False:
+    if num==1 and sCounter==False:
         sDmg=sDmg+5
-    if num==2 and fProtection==False:
+    elif sCounter==True:
         fDmg=fDmg+5
+    if num==2 and fCounter==False:
+        fDmg=fDmg+5
+    elif fCounter==True:
+        sDmg=sDmg+5
     print("Lightning Bolt")
 
 def cause_light_wounds(num):
     global fDmg
     global sDmg
-    if num==1 and sProtection==False:
+    if num==1 and sCounter==False:
         sDmg=sDmg+2
-    if num==2 and fProtection==False:
+    elif sCounter==True:
         fDmg=fDmg+2
+    if num==2 and fCounter==False:
+        fDmg=fDmg+2
+    elif fCounter==True:
+        sDmg=sDmg+2
     print("Cause Light Wounds")
 
 def cause_heavy_wounds(num):
     global fDmg
     global sDmg
-    if num==1 and sProtection==False:
+    if num==1 and sCounter==False:
         sDmg=sDmg+3
-    if num==2 and fProtection==False:
+    elif sCounter==True:
         fDmg=fDmg+3
+    if num==2 and fCounter==False:
+        fDmg=fDmg+3
+    elif fCounter==True:
+        sDmg=sDmg+3
     print("Cause Heavy Wounds")
 
 #stabet minden levédi
 def stab(num):
     global fDmg
     global sDmg
-    if num==1 and sProtection==False:
+    if num==1 and sShield==False:
         sDmg=sDmg+1
-    if num==2 and fProtection==False:
+    if num==2 and fShield==False:
         fDmg=fDmg+1
     print("Stab")
 

@@ -29,38 +29,37 @@ def spell_check(hand,num):
 #firtsL.. - beolvasáshoz kell, fLeft amit használunk
 def hand_reading_first(): 
     global fLeft
-    firstL=input("1. játékos bal kéz: ")
+    firstL=input("1. balkéz: ")
     fLeft=str(fLeft)+str(input_check(firstL))
-    print(fLeft)
+    #print(fLeft)
+    fLeft=spell_check(fLeft,1)
 
     global fRight
-    firstR=input("1. játékos jobbkéz: ")
+    firstR=input("1. jobbkéz: ")
     fRight=fRight+input_check(firstR)
-    print(fRight)
-
-    fLeft=spell_check(fLeft,1)
+    #print(fRight)
     fRight=spell_check(fRight,1)
     
 
 def hand_reading_second(): 
     global sLeft
-    secondL=input("2. játkos bal kéz: ")
+    secondL=input("2. balkéz: ")
     sLeft=sLeft+input_check(secondL)
-    print(sLeft)
+    #print(sLeft)
+    sLeft=spell_check(sLeft,2)
 
     global sRight
-    secondR=input("2. játékos jobbkéz: ")
+    secondR=input("2. jobbkéz: ")
     sRight=sRight+input_check(secondR)
-    print(sRight)
-
-    sLeft=spell_check(sLeft,2)
+    #print(sRight)
     sRight=spell_check(sRight,2)
 
 def game_over():
-    if fDmg==15:
-        print("\nJáték vége!\nA második játékos nyert!\n")
+    if fDmg>15:
+        print("\n1. játékos ",fDmg," sebzést kapott!\nJáték vége!\nA második játékos nyert!\n")
     else:
-        print("\nJáték vége!\nAz első játékos nyert!\n")
+        print("\n2. játékos ",sDmg," sebzést kapott!\nJáték vége!\nAz első játékos nyert!\n")
+    quit()
 
 def rounds(fL,fR,sL,sR):
     global fDmg
@@ -70,28 +69,18 @@ def rounds(fL,fR,sL,sR):
     global fCounter
     global sCounter
     #if fDmg<15 and sDmg<15:
-    if sDmg<15:
-        print("\n1.játékos\n")
+    if sDmg<15 and fDmg<15:
+        print("\n1. JÁTÉKOS ",fDmg," SEBZÉST KAPOTT\n")
         fShield=False
-        #sShield=False
         fCounter=False
-        #sCounter=False
         hand_reading_first()
-        #hand_reading_second()
-        #fDmg+=2
-        print(fDmg)
-        
-        #print(fShield,sShield)
-        #print(fCounter,sCounter)
     else:
         game_over()
-        
-    if fDmg<15:
-        print("\n2. játékos\n")
+    if fDmg<15 and sDmg<15:
+        print("\n2. JÁTÉKOS ",sDmg," SEBZÉST KAPOTT\n")
         sShield=False
         sCounter=False
         hand_reading_second()
-        print(sDmg)
     else:
         game_over()
     rounds(fL,fR,sL,sR)
@@ -103,10 +92,10 @@ def counter_spell(num):
     
     if num==1:
         fCounter=True
-        print(fCounter)
+        #print(fCounter)
     else:
         sCounter=True
-        print(sCounter)
+        #print(sCounter)
     print("Counter-spell")
 
 def shield(num):
@@ -115,10 +104,10 @@ def shield(num):
 
     if num==1:
         fShield=True
-        print(fShield)
+        #print(fShield)
     else:
         sShield=True
-        print(sShield)
+        #print(sShield)
     print("Shield")
 
 def missile(num):

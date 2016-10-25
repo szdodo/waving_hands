@@ -12,6 +12,7 @@ class wizard:
     counter = False
     goblin = False
     troll = False
+    halfLife = False
     damage = 0
 
 fPlayer = wizard()
@@ -121,20 +122,34 @@ def counter_spell(num):
 def shield(num):
     if num == 1:
         fPlayer.shield = True
-        # print(fShield)
     else:
         sPlayer.shield = True
-        # print(sShield)
     print('\033[94m' + '\033[1m' + "Shield" + '\033[0m')
 
 
 def missile(num):
     if num == 1 and sPlayer.shield == False and sPlayer.counter == False:
-        sPlayer.damage = sPlayer.damage + 1
+        if sPlayer.troll == True and sPlayer.halfLife == False:
+            sPlayer.halfLife = True
+        elif sPlayer.troll == True and sPlayer.halfLife == True:
+            sPlayer.troll = False
+            sPlayer.halfLife = False
+        elif sPlayer.goblin == True:
+            sPlayer.goblin = False
+        else:
+            sPlayer.damage = sPlayer.damage + 1
     elif sPlayer.counter:
         fPlayer.damage = fPlayer.damage + 1
     if num == 2 and fPlayer.shield == False and fPlayer.counter == False:
-        fPlayer.damage = fPlayer.damage + 1
+        if fPlayer.troll == True and fPlayer.halfLife == False:
+            fPlayer.halfLife = True
+        elif fPlayer.troll == True and fPlayer.halfLife == True:
+            fPlayer.troll = False
+            fPlayer.halfLife = False
+        elif fPlayer.goblin == True:
+            fPlayer.goblin = False
+        else:
+            fPlayer.damage = fPlayer.damage + 1
     elif fPlayer.counter:
         sPlayer.damage = sPlayer.damage + 1
     print('\033[95m' + '\033[1m' + "Missile" + '\033[0m')
@@ -142,11 +157,23 @@ def missile(num):
 
 def lightning_bolt(num):
     if num == 1 and sPlayer.counter == False:
-        sPlayer.damage = sPlayer.damage + 5
+        if sPlayer.troll == True:
+            sPlayer.troll = False
+            sPlayer.halfLife = False
+        elif sPlayer.goblin == True:
+            sPlayer.goblin = False
+        else:
+            sPlayer.damage = sPlayer.damage + 5
     elif sPlayer.counter:
         fPlayer.damage = fPlayer.damage + 5
     if num == 2 and fPlayer.counter == False:
-        fPlayer.damage = fPlayer.damage + 5
+        if fPlayer.troll == True:
+            fPlayer.troll = False
+            fPlayer.halfLife = False
+        elif fPlayer.goblin == True:
+            fPlayer.goblin = False
+        else:
+            fPlayer.damage = fPlayer.damage + 5
     elif fPlayer.counter:
         sPlayer.damage = sPlayer.damage + 5
     print('\033[93m' + '\033[1m' + "Lightning Bolt" + '\033[0m')
@@ -154,11 +181,23 @@ def lightning_bolt(num):
 
 def cause_light_wounds(num):
     if num == 1 and sPlayer.counter == False:
-        sPlayer.damage = sPlayer.damage + 2
+        if sPlayer.troll == True:
+            sPlayer.troll = False
+            sPlayer.halfLife = False
+        elif sPlayer.goblin == True:
+            sPlayer.goblin = False
+        else:
+            sPlayer.damage = sPlayer.damage + 2
     elif sPlayer.counter:
         fPlayer.damage = fPlayer.damage + 2
     if num == 2 and fPlayer.counter == False:
-        fPlayer.damage = fPlayer.damage + 2
+        if fPlayer.troll == True:
+            fPlayer.troll = False
+            fPlayer.halfLife = False
+        elif fPlayer.goblin == True:
+            fPlayer.goblin = False
+        else:
+            fPlayer.damage = fPlayer.damage + 2
     elif fPlayer.counter:
         sPlayer.damage = sPlayer.damage + 2
     print('\033[91m' + '\033[1m' + "Cause Light Wounds" + '\033[0m')
@@ -166,11 +205,23 @@ def cause_light_wounds(num):
 
 def cause_heavy_wounds(num):
     if num == 1 and sPlayer.counter == False:
-        sPlayer.damage = sPlayer.damage + 3
+        if sPlayer.troll == True:
+            sPlayer.troll = False
+            sPlayer.halfLife = False
+        elif sPlayer.goblin == True:
+            sPlayer.goblin = False
+        else:
+            sPlayer.damage = sPlayer.damage + 3
     elif sPlayer.counter:
         fPlayer.damage = fPlayer.damage + 3
     if num == 2 and fPlayer.counter == False:
-        fPlayer.damage = fPlayer.damage + 3
+        if fPlayer.troll == True:
+            fPlayer.troll = False
+            fPlayer.halfLife = False
+        elif fPlayer.goblin == True:
+            fPlayer.goblin = False
+        else:
+            fPlayer.damage = fPlayer.damage + 3
     elif fPlayer.counter:
         sPlayer.damage = sPlayer.damage + 3
     print('\033[91m' + '\033[1m' + "Cause Heavy Wounds" + '\033[0m')
@@ -180,9 +231,25 @@ def cause_heavy_wounds(num):
 
 def stab(num):
     if num == 1 and sPlayer.shield == False:
-        sPlayer.damage = sPlayer.damage + 1
+        if sPlayer.troll == True and sPlayer.halfLife == False:
+            sPlayer.halfLife = True
+        elif sPlayer.troll == True and sPlayer.halfLife == True:
+            sPlayer.troll = False
+            sPlayer.halfLife = False
+        elif sPlayer.goblin == True:
+            sPlayer.goblin = False
+        else:
+            sPlayer.damage = sPlayer.damage + 1
     if num == 2 and fPlayer.shield == False:
-        fPlayer.damage = fPlayer.damage + 1
+        if fPlayer.troll == True and fPlayer.halfLife == False:
+            fPlayer.halfLife = True
+        elif fPlayer.troll == True and fPlayer.halfLife == True:
+            fPlayer.troll = False
+            fPlayer.halfLife = False
+        elif fPlayer.goblin == True:
+            fPlayer.goblin = False
+        else:
+            fPlayer.damage = fPlayer.damage + 1
     print('\033[91m' + '\033[1m' + "Stab" + '\033[0m')
 
 

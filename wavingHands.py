@@ -5,15 +5,17 @@ fLeft = ""
 fRight = ""
 sLeft = ""
 sRight = ""
-# damage taken
-fDmg = 0
-sDmg = 0
-fShield = False
-sShield = False
-fCounter = False
-sCounter = False
-fGoblin = False
-sGoblin = False
+
+
+class wizard:
+    shield = False
+    counter = False
+    goblin = False
+    troll = False
+    damage = 0
+
+fPlayer = wizard()
+sPlayer = wizard()
 
 
 def input_check(letter):
@@ -62,172 +64,164 @@ def hand_reading_second():
     # print(sRight)
     sRight = spell_check(sRight, 2)
 
+#Itt csak kiírja, hogy ki a nyertes, a rounds()-ban ellenőriz
+
 
 def game_over():
-    if fDmg > 15:
-        print("\n1. játékos ", fDmg, " sebzést kapott!\nJáték vége!\nA második játékos nyert!\n")
+    if fPlayer.damage > 15:
+        print("\n1. játékos ", fPlayer.damage, " sebzést kapott!\nJáték vége!\nA második játékos nyert!\n")
     else:
-        print("\n2. játékos ", sDmg, " sebzést kapott!\nJáték vége!\nAz első játékos nyert!\n")
+        print("\n2. játékos ", sPlayer.damage, " sebzést kapott!\nJáték vége!\nAz első játékos nyert!\n")
     quit()
 
 
-def rounds(fL, fR, sL, sR):
-    global fDmg
-    global sDmg
-    global fShield
-    global sShield
-    global fCounter
-    global sCounter
-
+def rounds():
     os.system('clear')
 
-    if sDmg < 15 and fDmg < 15:
-        print("\n1. JÁTÉKOS ", fDmg, " SEBZÉST KAPOTT\nBal: ", fLeft, "\nJobb: ", fRight, "\n")
-        fShield = False
-        fCounter = False
+    if sPlayer.damage < 15 and fPlayer.damage < 15:
+        print("\n1. JÁTÉKOS ", fPlayer.damage, " SEBZÉST KAPOTT\nBal: ", fLeft, "\nJobb: ", fRight, "\n")
+
+        fPlayer.shield = False
+        fPlayer.counter = False
         hand_reading_first()
+        if fPlayer.goblin == True:
+            sPlayer.damage = sPlayer.damage + 1
+        if fPlayer.troll == True:
+            sPlayer.damage = sPlayer.damage + 2
     else:
         game_over()
 
     # 2db if kell h nem menjen túl az életükön ha az egyik meghalna mér akkorse
-    if fDmg < 15 and sDmg < 15:
-        print("\n2. JÁTÉKOS ", sDmg, " SEBZÉST KAPOTT\nBal: ", sLeft, "\nJobb: ", sRight, "\n")
-        sShield = False
-        sCounter = False
+    if fPlayer.damage < 15 and sPlayer.damage < 15:
+        print("\n2. JÁTÉKOS ", sPlayer.damage, " SEBZÉST KAPOTT\nBal: ", sLeft, "\nJobb: ", sRight, "\n")
+
+        sPlayer.shield = False
+        sPlayer.counter = False
         hand_reading_second()
+        if sPlayer.goblin == True:
+            fPlayer.damage = fPlayer.damage + 1
+        if sPlayer.troll == True:
+            fPlayer.damage = fPlayer.damage + 2
     else:
         game_over()
     time.sleep(0.5)
-    rounds(fL, fR, sL, sR)
+    rounds()
 
 
 def counter_spell(num):
-    global fCounter
-    global sCounter
-
     if num == 1:
-        fCounter = True
+        fPlayer.counter = True
         # print(fCounter)
     else:
-        sCounter = True
+        sPlayer.counter = True
         # print(sCounter)
     print('\033[92m' + '\033[1m' + "Counter-spell" + '\033[0m')
 
 
 def shield(num):
-    global fShield
-    global sShield
-
     if num == 1:
-        fShield = True
+        fPlayer.shield = True
         # print(fShield)
     else:
-        sShield = True
+        sPlayer.shield = True
         # print(sShield)
     print('\033[94m' + '\033[1m' + "Shield" + '\033[0m')
 
 
 def missile(num):
-    global fDmg
-    global sDmg
-    if num == 1 and sShield == False and sCounter == False:
-        sDmg = sDmg + 1
-    elif sCounter:
-        fDmg = fDmg + 1
-    if num == 2 and fShield == False and fCounter == False:
-        fDmg = fDmg + 1
-    elif fCounter:
-        sDmg = sDmg + 1
+    if num == 1 and sPlayer.shield == False and sPlayer.counter == False:
+        sPlayer.damage = sPlayer.damage + 1
+    elif sPlayer.counter:
+        fPlayer.damage = fPlayer.damage + 1
+    if num == 2 and fPlayer.shield == False and fPlayer.counter == False:
+        fPlayer.damage = fPlayer.damage + 1
+    elif fPlayer.counter:
+        sPlayer.damage = sPlayer.damage + 1
     print('\033[95m' + '\033[1m' + "Missile" + '\033[0m')
 
 
 def lightning_bolt(num):
-    global fDmg
-    global sDmg
-    if num == 1 and sCounter == False:
-        sDmg = sDmg + 5
-    elif sCounter:
-        fDmg = fDmg + 5
-    if num == 2 and fCounter == False:
-        fDmg = fDmg + 5
-    elif fCounter:
-        sDmg = sDmg + 5
+    if num == 1 and sPlayer.counter == False:
+        sPlayer.damage = sPlayer.damage + 5
+    elif sPlayer.counter:
+        fPlayer.damage = fPlayer.damage + 5
+    if num == 2 and fPlayer.counter == False:
+        fPlayer.damage = fPlayer.damage + 5
+    elif fPlayer.counter:
+        sPlayer.damage = sPlayer.damage + 5
     print('\033[93m' + '\033[1m' + "Lightning Bolt" + '\033[0m')
 
 
 def cause_light_wounds(num):
-    global fDmg
-    global sDmg
-    if num == 1 and sCounter == False:
-        sDmg = sDmg + 2
-    elif sCounter:
-        fDmg = fDmg + 2
-    if num == 2 and fCounter == False:
-        fDmg = fDmg + 2
-    elif fCounter:
-        sDmg = sDmg + 2
+    if num == 1 and sPlayer.counter == False:
+        sPlayer.damage = sPlayer.damage + 2
+    elif sPlayer.counter:
+        fPlayer.damage = fPlayer.damage + 2
+    if num == 2 and fPlayer.counter == False:
+        fPlayer.damage = fPlayer.damage + 2
+    elif fPlayer.counter:
+        sPlayer.damage = sPlayer.damage + 2
     print('\033[91m' + '\033[1m' + "Cause Light Wounds" + '\033[0m')
 
 
 def cause_heavy_wounds(num):
-    global fDmg
-    global sDmg
-    if num == 1 and sCounter == False:
-        sDmg = sDmg + 3
-    elif sCounter:
-        fDmg = fDmg + 3
-    if num == 2 and fCounter == False:
-        fDmg = fDmg + 3
-    elif fCounter:
-        sDmg = sDmg + 3
+    if num == 1 and sPlayer.counter == False:
+        sPlayer.damage = sPlayer.damage + 3
+    elif sPlayer.counter:
+        fPlayer.damage = fPlayer.damage + 3
+    if num == 2 and fPlayer.counter == False:
+        fPlayer.damage = fPlayer.damage + 3
+    elif fPlayer.counter:
+        sPlayer.damage = sPlayer.damage + 3
     print('\033[91m' + '\033[1m' + "Cause Heavy Wounds" + '\033[0m')
 
 # stabet minden levédi
 
 
 def stab(num):
-    global fDmg
-    global sDmg
-    if num == 1 and sShield == False:
-        sDmg = sDmg + 1
-    if num == 2 and fShield == False:
-        fDmg = fDmg + 1
+    if num == 1 and sPlayer.shield == False:
+        sPlayer.damage = sPlayer.damage + 1
+    if num == 2 and fPlayer.shield == False:
+        fPlayer.damage = fPlayer.damage + 1
     print('\033[91m' + '\033[1m' + "Stab" + '\033[0m')
 
 
 def cure_light_wounds(num):
-    global fDmg
-    global sDmg
-    if num == 1 and fDmg != 0:
-        fDmg = fDmg - 1
-    elif num == 2 and sDmg != 0:
-        sDmg = sDmg - 1
+    if num == 1 and fPlayer.damage != 0:
+        fPlayer.damage = fPlayer.damage - 1
+    elif num == 2 and sPlayer.damage != 0:
+        sPlayer.damage = sPlayer.damage - 1
     print("Cure Light Wounds")
 
 
 def cure_heavy_wounds(num):
-    global fDmg
-    global sDmg
-    if num == 1 and fDmg != 0:
-        if fDmg == 1:
-            fDmg = 0
+    if num == 1 and fPlayer.damage != 0:
+        if fPlayer.damage == 1:
+            fPlayer.damage = 0
         else:
-            fDmg = fDmg - 2
-    elif num == 2 and sDmg != 0:
-        if sDmg == 1:
-            sDmg = 0
+            fPlayer.damage = fPlayer.damage - 2
+    elif num == 2 and sPlayer.damage != 0:
+        if sPlayer.damage == 1:
+            sPlayer.damage = 0
         else:
-            sDmg = sDmg - 2
+            sPlayer.damage = sPlayer.damage - 2
     print("Cure Heavy Wounds")
 
 
 def summon_goblin(num):
-    global fGoblin
-    global summon_goblin
     if num == 1:
-        fGoblin = True
+        fPlayer.goblin = True
     else:
-        sGoblin = True
+        sPlayer.goblin = True
+    print("Summon Goblin")
+
+
+def summon_troll(num):
+    if num == 1:
+        fPlayer.troll = True
+    else:
+        sPlayer.troll = True
+    print("Summon Troll")
 
 
 gestures = {
@@ -243,7 +237,7 @@ gestures = {
     9: "DFW",
     10: "DFPW",
     11: "SFW",
-    12: "PSFW"}
+    12: "PFFW"}
 
 spells = {"WPP": counter_spell,
           "WWS": counter_spell,
@@ -257,7 +251,7 @@ spells = {"WPP": counter_spell,
           "DFW": cure_light_wounds,
           "DFPW": cure_heavy_wounds,
           "SFW": summon_goblin,
-          "PSFW": summon_troll}
+          "PFFW": summon_troll}
 
 
 def rules():
@@ -266,6 +260,7 @@ def rules():
     print('\033[4m' + "Varázslatok:" + '\033[0m')
     print("WPP/WWS - Counter-spell\nSD - Missile\nDFFDD/WDD - Lightning Bolt")
     print("WFP - Cause Light Wounds\nWPFD - Cause Heavy Wounds\nPS - Shield\n> - Stab")
+    print("DFW - Cure Light Wounds\nDFPW - Cure HeavyWounds\nSFW - Summon Goblin\nPSFW - Summon Troll")
     ind = input("\nÍrj be valamit a kezdéshez!")
     if ind != "":
         rounds(fLeft, fRight, sLeft, sRight)
@@ -275,7 +270,7 @@ os.system('clear')
 new_game = input("\n1 - Súgó\n2 - Új játék\n")
 
 if new_game == '2':
-    rounds(fLeft, fRight, sLeft, sRight)
+    rounds()
 elif new_game == '1':
     rules()
 else:

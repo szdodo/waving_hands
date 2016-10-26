@@ -75,6 +75,8 @@ def hand_reading_second():
 
 
 def game_over():
+    os.system('clear')
+    print_winner()
     if fPlayer.damage > 15:
         print("\n1. játékos ", fPlayer.damage, " sebzést kapott!\nJáték vége!\nA második játékos nyert!\n")
     else:
@@ -95,14 +97,14 @@ def rounds():
         hand_reading_first()
         if fPlayer.goblin == True:
             sPlayer.damage = sPlayer.damage + 1
-            print("Goblin")
+            print('\033[91m' + '\033[1m' + "Goblin" + '\033[0m')
         if fPlayer.troll == True:
             sPlayer.damage = sPlayer.damage + 2
-            print("Troll")
+            print('\033[91m' + '\033[1m' + "Troll" + '\033[0m')
         if fPlayer.heatR==True:
-            print("Resist Heat")
+            print('\033[95m' + '\033[1m' + "Resist Heat" + '\033[0m')
         if fPlayer.coldR==True:
-            print("Resist Cold")
+            print('\033[95m' + '\033[1m' + "Resist Cold" + '\033[0m')
     else:
         game_over()
 
@@ -117,14 +119,14 @@ def rounds():
         hand_reading_second()
         if sPlayer.goblin == True:
             fPlayer.damage = fPlayer.damage + 1
-            print("Goblin")
+            print('\033[91m' + '\033[1m' + "Goblin" + '\033[0m')
         if sPlayer.troll == True:
             fPlayer.damage = fPlayer.damage + 2
-            print("Troll")
+            print('\033[91m' + '\033[1m' + "Troll" + '\033[0m')
         if sPlayer.heatR==True:
-            print("Resist Heat")
+            print('\033[95m' + '\033[1m' + "Resist Heat" + '\033[0m')
         if sPlayer.coldR==True:
-            print("Resist Cold")
+            print('\033[95m' + '\033[1m' + "Resist Cold" + '\033[0m')
     else:
         game_over()
     time.sleep(0.5)
@@ -280,7 +282,7 @@ def cure_light_wounds(num):
         fPlayer.damage = fPlayer.damage - 1
     elif num == 2 and sPlayer.damage != 0:
         sPlayer.damage = sPlayer.damage - 1
-    print("Cure Light Wounds")
+    print('\033[92m' + '\033[1m' + "Cure Light Wounds" + '\033[0m')
 
 
 def cure_heavy_wounds(num):
@@ -294,7 +296,7 @@ def cure_heavy_wounds(num):
             sPlayer.damage = 0
         else:
             sPlayer.damage = sPlayer.damage - 2
-    print("Cure Heavy Wounds")
+    print('\033[92m' + '\033[1m' + "Cure Heavy Wounds" + '\033[0m')
 
 
 def summon_goblin(num):
@@ -302,8 +304,9 @@ def summon_goblin(num):
         fPlayer.goblin = True
     else:
         sPlayer.goblin = True
+    print('\033[91m' + '\033[1m' + "Summon Goblin" + '\033[0m' )
     print_goblin()
-    print("Summon Goblin")    
+    
 
 
 def summon_troll(num):
@@ -311,8 +314,8 @@ def summon_troll(num):
         fPlayer.troll = True
     else:
         sPlayer.troll = True
+    print('\033[91m' + '\033[1m' + "Summon Troll" + '\033[0m' )
     print_troll()
-    print("Summon Troll")
 
 
 def fireball(num):
@@ -324,7 +327,7 @@ def fireball(num):
         sPlayer.damage = sPlayer.damage + 5
     if num == 2 and fPlayer.heatR == False and fPlayer.ice == False:
         fPlayer.damage = fPlayer.damage + 5
-    print("Fireball")
+    print('\033[93m' + '\033[1m' + "Fireball" + '\033[0m')
 
 
 def fire_storm(num):
@@ -336,7 +339,7 @@ def fire_storm(num):
         sPlayer.damage = sPlayer.damage + 5
     if num == 2 and fPlayer.heatR == False and fPlayer.ice == False:
         fPlayer.damage = fPlayer.damage + 5
-    print("Fire Storm")
+    print('\033[93m' + '\033[1m' + "Fire Storm" + '\033[0m')
 
 
 def ice_storm(num):
@@ -348,7 +351,7 @@ def ice_storm(num):
         sPlayer.damage = sPlayer.damage + 5
     if num == 2 and fPlayer.coldR == False and fPlayer.fire == False:
         fPlayer.damage = fPlayer.damage + 5
-    print("Ice Storm")
+    print('\033[94m' + '\033[1m' + "Ice Storm" + '\033[0m')
 
 
 def resist_heat(num):
@@ -356,7 +359,7 @@ def resist_heat(num):
         fPlayer.heatR = True
     else:
         sPlayer.heatR = True
-    print("Resist Heat")
+    print('\033[95m' + '\033[1m' + "Resist Heat" + '\033[0m')
 
 
 def resist_cold(num):
@@ -364,7 +367,7 @@ def resist_cold(num):
         fPlayer.coldR = True
     else:
         sPlayer.coldR = True
-    print("Resist Cold")
+    print('\033[95m' + '\033[1m' + "Resist Cold" + '\033[0m')
 
 
 def remove_enchantment(num):
@@ -374,7 +377,7 @@ def remove_enchantment(num):
     if num == 2 and fPlayer.counter == False:
         fPlayer.coldR = False
         fPlayer.heatR = False
-    print("Remove Enchantment")
+    print('\033[1m' + "Remove Enchantment"+'\033[0m')
 
 
 def print_goblin():
@@ -430,6 +433,8 @@ def print_troll():
 .-~  `V~V~V'`\ -v----v-   \/     /.-~  //..  \   \.  `~-._
   //.     \.' `\..___..---/    /''    """)
 
+
+
 gestures = {
     0: "WPP",
     1: "WWS",
@@ -478,15 +483,18 @@ def rules():
     print('\033[4m' + "Varázslatok:" + '\033[0m')
     print("WPP/WWS - Counter-spell\nSD - Missile\nDFFDD/WDD - Lightning Bolt")
     print("WFP - Cause Light Wounds\nWPFD - Cause Heavy Wounds\nPS - Shield\n> - Stab")
-    print("DFW - Cure Light Wounds\nDFPW - Cure HeavyWounds\nSFW - Summon Goblin\nPSFW - Summon Troll")
+    print("DFW - Cure Light Wounds\nDFPW - Cure HeavyWounds\nSFW - Summon Goblin\nPFFW - Summon Troll")
+    print("FSSPD - Fireball\nSWWF - Fire Storm\nWSSF - Ice Storm")
+    print("WWPF - Resist Heat\nSSFP - Resist Cold\nPDWP - Remove Enchantment")
     ind = input("\nÍrj be valamit a kezdéshez!")
     if ind != "":
-        rounds(fLeft, fRight, sLeft, sRight)
+        rounds()
 
 
 def main():
     os.system('clear')
     new_game = input("\n1 - Súgó\n2 - Új játék\n")
+
 
     if new_game == '2':
        rounds()

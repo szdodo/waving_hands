@@ -14,6 +14,11 @@ class wizard:
     troll = False
     halfLife = False
     damage = 0
+    heatR = False
+    coldR = False
+    fire = False
+    ice = False
+
 
 fPlayer = wizard()
 sPlayer = wizard()
@@ -65,6 +70,7 @@ def hand_reading_second():
     # print(sRight)
     sRight = spell_check(sRight, 2)
 
+
 #Itt csak kiírja, hogy ki a nyertes, a rounds()-ban ellenőriz
 
 
@@ -84,11 +90,19 @@ def rounds():
 
         fPlayer.shield = False
         fPlayer.counter = False
+        fPlayer.fire = False
+        fPlayer.ice = False
         hand_reading_first()
         if fPlayer.goblin == True:
             sPlayer.damage = sPlayer.damage + 1
+            print("Goblin")
         if fPlayer.troll == True:
             sPlayer.damage = sPlayer.damage + 2
+            print("Troll")
+        if fPlayer.heatR==True:
+            print("Resist Heat")
+        if fPlayer.coldR==True:
+            print("Resist Cold")
     else:
         game_over()
 
@@ -98,11 +112,19 @@ def rounds():
 
         sPlayer.shield = False
         sPlayer.counter = False
+        sPlayer.fire = False
+        sPlayer.cold = False
         hand_reading_second()
         if sPlayer.goblin == True:
             fPlayer.damage = fPlayer.damage + 1
+            print("Goblin")
         if sPlayer.troll == True:
             fPlayer.damage = fPlayer.damage + 2
+            print("Troll")
+        if sPlayer.heatR==True:
+            print("Resist Heat")
+        if sPlayer.coldR==True:
+            print("Resist Cold")
     else:
         game_over()
     time.sleep(0.5)
@@ -280,7 +302,8 @@ def summon_goblin(num):
         fPlayer.goblin = True
     else:
         sPlayer.goblin = True
-    print("Summon Goblin")
+    print_goblin()
+    print("Summon Goblin")    
 
 
 def summon_troll(num):
@@ -288,8 +311,124 @@ def summon_troll(num):
         fPlayer.troll = True
     else:
         sPlayer.troll = True
+    print_troll()
     print("Summon Troll")
 
+
+def fireball(num):
+    if num == 1:
+        fPlayer.fire = True
+    else:
+        sPlayer.fire = True
+    if num == 1 and sPlayer.heatR == False and sPlayer.ice == False:
+        sPlayer.damage = sPlayer.damage + 5
+    if num == 2 and fPlayer.heatR == False and fPlayer.ice == False:
+        fPlayer.damage = fPlayer.damage + 5
+    print("Fireball")
+
+
+def fire_storm(num):
+    if num == 1:
+        fPlayer.fire = True
+    else:
+        sPlayer.fire = True
+    if num == 1 and sPlayer.heatR == False and sPlayer.ice == False:
+        sPlayer.damage = sPlayer.damage + 5
+    if num == 2 and fPlayer.heatR == False and fPlayer.ice == False:
+        fPlayer.damage = fPlayer.damage + 5
+    print("Fire Storm")
+
+
+def ice_storm(num):
+    if num == 1:
+        fPlayer.ice = True
+    else:
+        sPlayer.ice = True
+    if num == 1 and sPlayer.coldR == False and sPlayer.fire == False:
+        sPlayer.damage = sPlayer.damage + 5
+    if num == 2 and fPlayer.coldR == False and fPlayer.fire == False:
+        fPlayer.damage = fPlayer.damage + 5
+    print("Ice Storm")
+
+
+def resist_heat(num):
+    if num == 1:
+        fPlayer.heatR = True
+    else:
+        sPlayer.heatR = True
+    print("Resist Heat")
+
+
+def resist_cold(num):
+    if num == 1:
+        fPlayer.coldR = True
+    else:
+        sPlayer.coldR = True
+    print("Resist Cold")
+
+
+def remove_enchantment(num):
+    if num == 1 and sPlayer.counter == False:
+        sPlayer.coldR = False
+        sPlayer.heatR = False
+    if num == 2 and fPlayer.counter == False:
+        fPlayer.coldR = False
+        fPlayer.heatR = False
+    print("Remove Enchantment")
+
+
+def print_goblin():
+    print("         ,      ,")
+    print("        /(.----.)\ ")
+    print("    |\  \/      \/  /|")
+    print("    | \ / =.  .= \ / |")
+    print("    \( \   o\/o   / )/")
+    print("     \_, '-/  \-' ,_/")
+    print("       /   \__/   \"")
+    print("       \ \__/\__/ /")
+    print("     ___\ \|--|/ /___")
+    print("   /`    \      /    `'\'")
+    print("  /       '----'       '\'")
+
+def print_winner():
+    print("               _________")
+    print("              |#########|")
+    print("              |#########|")
+    print("              |#########|")
+    print("              |#########|")
+    print("              |#########|")
+    print("            __|_________|__")
+    print("              |     '_ ' '\'")
+    print("              F     (.) (.)--.__")
+    print("             /                  `.")
+    print("            J                    |")
+    print("            F       ._          .'")
+    print("           J          `-.____.-'")
+    print("           F           '\'")
+    print("          J             '\'")
+    print("          |              '\'---")
+    print("          |  .  `.        '\'_E")
+    print("          |   `.  `.       L")
+    print(" ,,,      |     `.  `.     |")
+    print("\VVV'     |       `.  `    |")
+    print(" \W|      J         ```    F")
+    print("  `.    .' \              /")
+    print("    `--'    )    ____.-  '")
+    print("           /    /   `.   `.  .-")
+    print("          /   .'      `.   `' /")
+    print("          `.  \         `.   /")
+    print("            `._|          `-'    ")
+
+
+def print_troll():
+    print("""
+       .         __      '        .       '       .
+  *            _-~  ~-_      .         '      .
+ .   .        /___  ___\  '             .             .
+             / (O)  (o) \         *         ___    *  .
+   __,-~-~-,/    -..-    \  .-~~-.   __..-~~   ~~-.._
+.-~  `V~V~V'`\ -v----v-   \/     /.-~  //..  \   \.  `~-._
+  //.     \.' `\..___..---/    /''    """)
 
 gestures = {
     0: "WPP",
@@ -304,7 +443,13 @@ gestures = {
     9: "DFW",
     10: "DFPW",
     11: "SFW",
-    12: "PFFW"}
+    12: "PFFW",
+    13: "FSSPD",
+    14: "SWWF",
+    15: "WSSF",
+    16: "WWPF",
+    17: "SSFP",
+    18: "PDWP"}
 
 spells = {"WPP": counter_spell,
           "WWS": counter_spell,
@@ -318,7 +463,13 @@ spells = {"WPP": counter_spell,
           "DFW": cure_light_wounds,
           "DFPW": cure_heavy_wounds,
           "SFW": summon_goblin,
-          "PFFW": summon_troll}
+          "PFFW": summon_troll,
+          "FSSPD": fireball,
+          "SWWF": fire_storm,
+          "WSSF": ice_storm,
+          "WWPF": resist_heat,
+          "SSFP": resist_cold,
+          "PDWP": remove_enchantment}
 
 
 def rules():
@@ -333,12 +484,17 @@ def rules():
         rounds(fLeft, fRight, sLeft, sRight)
 
 
-os.system('clear')
-new_game = input("\n1 - Súgó\n2 - Új játék\n")
+def main():
+    os.system('clear')
+    new_game = input("\n1 - Súgó\n2 - Új játék\n")
 
-if new_game == '2':
-    rounds()
-elif new_game == '1':
-    rules()
-else:
-    quit()
+    if new_game == '2':
+       rounds()
+    elif new_game == '1':
+        rules()
+    else:
+        quit()
+
+
+if __name__ == '__main__':
+    main()
